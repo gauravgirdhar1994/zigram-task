@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Card, Col, Row, Container } from "react-bootstrap";
 import axios from "axios";
 import "./App.css";
+
 export default class Cocktails extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +23,7 @@ export default class Cocktails extends Component {
     this.getFilters();
   }
 
+  //Function to get the different filters to be used to filter the data
   async getFilters() {
     let filters = ["c", "g", "i", "a"];
     let filterArr = [];
@@ -39,8 +41,9 @@ export default class Cocktails extends Component {
     });
   }
 
+  //Function to search the data by alphabet
   searchDrink = (e) => {
-    // console.log(e.target.value);
+
     if (e) {
       this.setState(
         {
@@ -62,8 +65,9 @@ export default class Cocktails extends Component {
     }
   };
 
+  //Function to filter the drinks on the basis of different filters
   filterDrink = (e, type) => {
-    // console.log(e.target.value);
+
     if (e.target.value) {
       this.setState(
         {
@@ -96,11 +100,12 @@ export default class Cocktails extends Component {
       url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?${this.state.filterType}=${this.state.searchLetter}`;
     }
     axios.get(url).then((response) => {
-      // console.log("Response", response);
+
       this.setState({ cocktailList: response.data });
     });
   }
 
+  //Function to capitalize the word
   ucword = (str) => {
     if (str) {
       str = str
@@ -115,6 +120,7 @@ export default class Cocktails extends Component {
     return str; //First letter capital in each word
   };
 
+  
   render() {
     const alphabets = "abcdefghijklmnopqrstuvwxyz";
     let alphabetsArr = [];
@@ -122,7 +128,7 @@ export default class Cocktails extends Component {
     for (var indx in alphabets) {
       alphabetsArr.push(alphabets[indx]);
     }
-    console.log("filters", alphabetsArr);
+
     if (!this.state.cocktailList) return <p>Loading data</p>;
     return (
       <Container>
@@ -139,11 +145,7 @@ export default class Cocktails extends Component {
                 </a>
               );
             })}
-            {/* <input
-              className="form-control"
-              maxLength="1"
-              onChange={(e) => this.searchDrink(e)}
-            ></input> */}
+            
             {this.state.filters && this.state.filters["i"] ? (
               <>
                 <hr></hr>
@@ -265,7 +267,6 @@ export default class Cocktails extends Component {
                             : ""}
                         </p>
                       </Card.Text>
-                      {/* <Button variant="primary">Go somewhere</Button> */}
                     </Card.Body>
                   </Card>
                 </Col>
